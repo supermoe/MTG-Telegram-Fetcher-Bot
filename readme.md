@@ -22,7 +22,7 @@ If the search results in too many possible cards, the bot returns an error.
 >> Too many cards match ambiguous name “urabrask”. Add more words to refine your search.
 ```
 
-## Developpers
+## Developers
 ### Bot Token
 Add your telegram token to an **auth.py** in the root directory like so:
 ```
