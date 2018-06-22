@@ -16,7 +16,7 @@ Partial names work as well. If the search comes up with one unique card, it is d
 If the search results in too many possible cards, the bot offers possible matches.
 ```
 /card ajani
->> Too many cards match the ambiguous name "ajani", which card did you mean to fetch?.
+>> Too many cards match the ambiguous name "ajani", which card did you mean to fetch?
 >> Ajani's influence
 >> Ajani, Wise Counselor
 >> Ajani's Welcome
