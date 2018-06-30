@@ -2,7 +2,7 @@ import json
 import requests
 
 scryfall_base = "https://api.scryfall.com"
-max_results = 4
+max_results = 20
 
 #card_name must be a string
 def fetch_card(card_name):
@@ -16,33 +16,33 @@ def fetch_card(card_name):
 		return {"success": 0, "card":card}
 	elif object['object'] == "error":
 		print("-> " + object['details'])
-		print(object)
-		if 'type' in object and object['type'] == 'ambiguous':
-			print("--> searching for possible cards")
-			return search_card(card_name)
 		return {"success": -1, "details":object['details']}
 	else:
 		print("-> Unknown Error")
 		return {"success": -1, "details":"Unknown Error."}
 
-def search_card(card_name):
-	parameters = {"q": card_name, "order": "released", "include_extras":False}
+def fetch_inline(name):
+	print("Inline search for \"" + name + "\"")
+	parameters = {"q": name, "order": "released", "include_extras":False}
 	r = requests.get(scryfall_base + "/cards/search", params=parameters)
 	object = r.json()
 	if object['object'] == "list":
-		print("---> Found " + str(len(object['data'])) + " cards:")
-		object['data'] = object['data'][:max_results]
 		cards = []
+		print("-> Found " + str(len(object['data'])) + " cards:")
 		for card in object['data']:
-			print("----> " + card['name'])
-			cards.append(card['name'])
-		return {"success": 1, "query":card_name, "list":cards}
-	elif object['object'] == "error":
-		print("---> " + object['details'])
-		return {"success": -1, "details":object['details']}
+			if 'image_uris' in card:
+				print("--> " + card['name'])
+				cards.append({'name':card['name'], 'thumb':card['image_uris']['small'], 'full':card['image_uris']['normal'], 'url':card['scryfall_uri']})
+			else:
+				print("--> " + card['name'])
+				for face in card['card_faces']:
+					cards.append({'name':face['name'], 'thumb':face['image_uris']['small'], 'full':face['image_uris']['normal'], 'url':card['scryfall_uri']})
+		return cards[:max_results]
 	else:
-		print("---> Unknown Error")
-		return {"success": -1, "details":"Unknown Error."}
+		print('-> Error')
+		return []
+
+
 	
 
 	
