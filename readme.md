@@ -7,7 +7,7 @@ To search for cards, mention the bot then input your search **without sending th
 ```
 
 ### Command
-Use the **/card <name of card>** command to display for a card. Capitalisation and minimal spelling errors are ignored.
+Use the **/card <name of card>** command to display a card. Capitalization and minimal spelling errors do not affect the result.
 ```
 /card The Ur-Dragon
 ```
